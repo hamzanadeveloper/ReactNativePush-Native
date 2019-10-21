@@ -15,10 +15,10 @@
       "web"
     ],
     "ios": {
-      "bundleIdentifier": "com.rc-dev.push-demo"
+      "bundleIdentifier": "com.rcdev.pushdemo"
     },
     "android": {
-      "package": "com.rc-dev.push-demo"
+      "package": "com.rcdev.pushdemo"
     }
   }
 }
