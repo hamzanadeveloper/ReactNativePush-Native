@@ -4,7 +4,6 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
-  KeyboardAvoidingView,
   View,
 } from 'react-native';
 import { Notifications } from 'expo';

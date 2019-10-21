@@ -2,7 +2,8 @@
   "name": "ReactNativePushDemo",
   "displayName": "React Native Push Demo",
   "expo": {
-    "name": "ReactNativePushDemo",
+    "name": "React Native Push Demo",
+    "icon": "./assets/img/react-native-icon.png",
     "slug": "expo-template-bare",
     "privacy": "unlisted",
     "sdkVersion": "35.0.0",
@@ -12,6 +13,12 @@
       "ios",
       "android",
       "web"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "com.rc-dev.push-demo"
+    },
+    "android": {
+      "package": "com.rc-dev.push-demo"
+    }
   }
 }
