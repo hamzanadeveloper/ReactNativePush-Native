@@ -10,7 +10,6 @@ import {
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
 
-console.log("Expo Testing!!")
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -33,10 +32,10 @@ export default class App extends React.Component {
     }
 
     let token = await Notifications.getExpoPushTokenAsync();
+    // Presumably save token in db here.
 
-    console.log(token)
-
-    this.subscription = Notifications.addListener(this.handleNotification);
+    this.subscription = Notifications.addListener(this.handleNotification); //Useful in iOS.
+    // In iOS, notifications are not displayed if app is in foreground. By adding a listener, we can manually handle it.
 
     this.setState({
       token,
@@ -44,12 +43,6 @@ export default class App extends React.Component {
   }
 
   sendPushNotification(token = this.state.token, title = this.state.title, body = this.state.body) {
-    console.log(JSON.stringify({
-      to: token,
-      title: title,
-      body: body,
-      data: { message: `${title} - ${body}` },
-    }))
     return fetch('https://exp.host/--/api/v2/push/send', {
       body: JSON.stringify({
         to: token,
