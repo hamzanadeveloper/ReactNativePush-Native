@@ -65,7 +65,7 @@ export default class App extends React.Component {
 
   render() {
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="position">
+        <View style={styles.container}>
           <Text style={styles.title}>Expo Sample Notifications App</Text>
           <Text style={styles.text}>Title</Text>
           <TextInput
@@ -105,7 +105,7 @@ export default class App extends React.Component {
                 <Text style={styles.text}>{JSON.stringify(this.state.notification.data.message)}</Text>
               </View>
           ) : null}
-        </KeyboardAvoidingView>
+        </View>
     );
   }
 }
