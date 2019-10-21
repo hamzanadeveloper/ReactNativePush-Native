@@ -1,13 +1,21 @@
 import React from 'react';
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  View,
-} from 'react-native';
+import { Platform} from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native';
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import Toast from 'react-native-root-toast';
+
+const toastStyle = {
+  duration: Toast.durations.LONG,
+  position: 40,
+  backgroundColor: 'black',
+  textColor: 'white',
+  shadow: true,
+  opacity: 0.8,
+  animation: true,
+  hideOnPress: true,
+  delay: 500,
+}
 
 export default class App extends React.Component {
   constructor(props) {
@@ -60,6 +68,10 @@ export default class App extends React.Component {
     this.setState({
       notification,
     });
+
+    if(Platform.OS === 'ios'){
+      Toast.show(this.state.title + " - " + this.state.body, toastStyle)
+    }
   };
 
   render() {
