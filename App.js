@@ -1,21 +1,9 @@
 import React from 'react';
-import { Platform} from 'react-native'
-import { StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native';
+import { Platform, StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native'
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import Toast from 'react-native-root-toast';
-
-const toastStyle = {
-  duration: Toast.durations.LONG,
-  position: 40,
-  backgroundColor: 'black',
-  textColor: 'white',
-  shadow: true,
-  opacity: 0.8,
-  animation: true,
-  hideOnPress: true,
-  delay: 500,
-}
+import FlashMessage from "react-native-flash-message";
+import { showMessage } from "react-native-flash-message";
 
 export default class App extends React.Component {
   constructor(props) {
@@ -69,8 +57,15 @@ export default class App extends React.Component {
       notification,
     });
 
-    if(Platform.OS === 'ios'){
-      Toast.show(this.state.title + " - " + this.state.body, toastStyle)
+    if(Platform.OS){ // Add to only iOS
+      showMessage({
+        message: this.state.title,
+        icon: 'info',
+        description: this.state.body,
+        backgroundColor: 'rgb(100,100,100)',
+        color: 'white',
+        type: "info",
+      });
     }
   };
 
@@ -116,6 +111,7 @@ export default class App extends React.Component {
                 <Text style={styles.text}>{JSON.stringify(this.state.notification.data.message)}</Text>
               </View>
           ) : null}
+          <FlashMessage position="top" />
         </View>
     );
   }
