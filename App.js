@@ -10,6 +10,12 @@ import React, { Component } from 'react';
 import { TextInput, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import PushController from './PushController.js';
 import appConfig from './app.json';
+import {YellowBox} from 'react-native';
+
+
+YellowBox.ignoreWarnings([
+    'Require cycle:',
+]);
 
 type Props = {};
 const API_URL = "https://fcm.googleapis.com/fcm/send";
