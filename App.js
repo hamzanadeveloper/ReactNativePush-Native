@@ -1,147 +1,75 @@
-import React from 'react';
-import { Platform, StyleSheet, TextInput, TouchableOpacity, Text, View } from 'react-native'
-import { Notifications } from 'expo';
-import * as Permissions from 'expo-permissions';
-import FlashMessage from "react-native-flash-message";
-import { showMessage } from "react-native-flash-message";
+import React, { Component } from 'react';
+import { Text, View, StyleSheet , Picker, AppState, Platform } from 'react-native'
+import PickerItem from "react-native-web/src/exports/Picker/PickerItem";
+import PushController from './PushController.js'
+import PushNotification from "react-native-push-notification"
 
-export default class App extends React.Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
+
+    this.handleAppStateChange = this.handleAppStateChange.bind(this);
+
     this.state = {
-      token: null,
-      notification: null,
-      title: 'Hello World',
-      body: 'Say something!',
-    };
-  }
-
-  async registerForPushNotifications() {
-    const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-
-    if (status !== 'granted') {
-      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-      if (status !== 'granted') {
-        return;
-      }
+      seconds: 5,
     }
-
-    let token = await Notifications.getExpoPushTokenAsync();
-    // Presumably save token in db here.
-
-    this.subscription = Notifications.addListener(this.handleNotification); //Useful in iOS.
-    // In iOS, notifications are not displayed if app is in foreground. By adding a listener, we can manually handle it.
-
-    this.setState({
-      token,
-    });
   }
 
-  sendPushNotification(token = this.state.token, title = this.state.title, body = this.state.body) {
-    return fetch('https://exp.host/--/api/v2/push/send', {
-      body: JSON.stringify({
-        to: token,
-        title: title,
-        body: body,
-        data: { message: `${title} - ${body}` },
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      method: 'POST',
-    });
+  componentDidMount() {
+    AppState.addEventListener('change', this.handleAppStateChange)
   }
 
-  handleNotification = notification => {
-    this.setState({
-      notification,
-    });
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this.handleAppStateChange)
+  }
 
-    if(Platform.OS){ // Add to only iOS
-      showMessage({
-        message: this.state.title,
-        icon: 'info',
-        description: this.state.body,
-        backgroundColor: 'rgb(100,100,100)',
-        color: 'white',
-        type: "info",
+  handleAppStateChange(appState){
+    if(appState === 'background'){
+      let date = new Date(Date.now() + (this.state.seconds * 1000));
+
+      if(Platform.OS === 'ios'){
+        date = date.toISOString()
+      }
+
+      PushNotification.localNotificationSchedule({
+        message: "Hello World.",
+        date: date,
       });
     }
-  };
+  }
 
   render() {
     return (
         <View style={styles.container}>
-          <Text style={styles.title}>Expo Sample Notifications App</Text>
-          <Text style={styles.text}>Title</Text>
-          <TextInput
-              style={styles.input}
-              onChangeText={title => this.setState({ title })}
-              maxLength={100}
-              value={this.state.title}
-          />
-          <Text style={styles.text}>Message</Text>
-          <TextInput
-              style={styles.input}
-              onChangeText={body => this.setState({ body })}
-              maxLength={100}
-              value={this.state.body}
-          />
-          <TouchableOpacity
-              onPress={() => this.registerForPushNotifications()}
-              style={styles.touchable}>
-            <Text>Register me for notifications!</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.sendPushNotification()} style={styles.touchable}>
-            <Text>Send me a notification!</Text>
-          </TouchableOpacity>
-          {this.state.token ? (
-              <View>
-                <Text style={styles.text}>Token</Text>
-                <TextInput
-                    style={styles.input}
-                    onChangeText={token => this.setState({ token })}
-                    value={this.state.token}
-                />
-              </View>
-          ) : null}
-          {this.state.notification ? (
-              <View>
-                <Text style={styles.text}>Last Notification:</Text>
-                <Text style={styles.text}>{JSON.stringify(this.state.notification.data.message)}</Text>
-              </View>
-          ) : null}
-          <FlashMessage position="top" />
+          <Text style={styles.welcome}>Choose your notification time in seconds.</Text>
+          <Picker
+          style={styles.picker}
+          selectedValue={this.state.seconds}
+          onValueChange={(seconds) => this.setState({seconds})}
+          >
+            <PickerItem label="5" value={5}/>
+            <PickerItem label="10" value={10}/>
+            <PickerItem label="15" value={15}/>
+          </Picker>
+          <PushController/>
         </View>
-    );
+    )
   }
 }
 
 const styles = StyleSheet.create({
-  title: {
-    fontSize: 18,
-    padding: 8,
-  },
-  text: {
-    paddingBottom: 2,
-    padding: 8,
-  },
   container: {
     flex: 1,
-    paddingTop: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
   },
-  touchable: {
-    borderWidth: 1,
-    borderRadius: 4,
-    margin: 8,
-    padding: 8,
-    width: '95%',
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
   },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    margin: 8,
-    padding: 8,
-    width: '95%',
-  },
+  picker: {
+    width: 100,
+  }
 });

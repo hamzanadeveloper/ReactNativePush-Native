@@ -32,4 +32,6 @@ target 'ReactNativePushDemo' do
 
   use_unimodules!
 
+  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
+
 end
