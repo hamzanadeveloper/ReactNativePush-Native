@@ -1,59 +1,65 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet , Picker, AppState, Platform } from 'react-native'
-import PickerItem from "react-native-web/src/exports/Picker/PickerItem";
-import PushController from './PushController.js'
-import PushNotification from "react-native-push-notification"
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow
+ */
 
-export default class App extends Component {
+import React, { Component } from 'react';
+import { TextInput, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
+import PushController from './PushController.js';
+import appConfig from './app.json';
+
+type Props = {};
+export default class App extends Component<Props> {
+
   constructor(props) {
     super(props);
-
-    this.handleAppStateChange = this.handleAppStateChange.bind(this);
-
     this.state = {
-      seconds: 5,
-    }
-  }
+      senderId: appConfig.senderID
+    };
 
-  componentDidMount() {
-    AppState.addEventListener('change', this.handleAppStateChange)
-  }
-
-  componentWillUnmount() {
-    AppState.removeEventListener('change', this.handleAppStateChange)
-  }
-
-  handleAppStateChange(appState){
-    if(appState === 'background'){
-      let date = new Date(Date.now() + (this.state.seconds * 1000));
-
-      if(Platform.OS === 'ios'){
-        date = date.toISOString()
-      }
-
-      PushNotification.localNotificationSchedule({
-        message: "Hello World.",
-        date: date,
-      });
-    }
+    this.notif = new PushController(this.onRegister.bind(this), this.onNotif.bind(this));
   }
 
   render() {
     return (
         <View style={styles.container}>
-          <Text style={styles.welcome}>Choose your notification time in seconds.</Text>
-          <Picker
-          style={styles.picker}
-          selectedValue={this.state.seconds}
-          onValueChange={(seconds) => this.setState({seconds})}
-          >
-            <PickerItem label="5" value={5}/>
-            <PickerItem label="10" value={10}/>
-            <PickerItem label="15" value={15}/>
-          </Picker>
-          <PushController/>
+          <Text style={styles.title}>Example app react-native-push-notification</Text>
+          <View style={styles.spacer}></View>
+          <TextInput style={styles.textField} value={this.state.registerToken} placeholder="Register token" />
+          <View style={styles.spacer}></View>
+
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.localNotif() }}><Text>Local Notification (now)</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.scheduleNotif() }}><Text>Schedule Notification in 30s</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelNotif() }}><Text>Cancel last notification (if any)</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelAll() }}><Text>Cancel all notifications</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.checkPermission(this.handlePerm.bind(this)) }}><Text>Check Permission</Text></TouchableOpacity>
+
+          <View style={styles.spacer}></View>
+          <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="GCM ID" />
+          <TouchableOpacity style={styles.button} onPress={() => { this.notif.configure(this.onRegister.bind(this), this.onNotif.bind(this), this.state.senderId) }}><Text>Configure Sender ID</Text></TouchableOpacity>
+          {this.state.gcmRegistered && <Text>GCM Configured !</Text>}
+
+          <View style={styles.spacer}></View>
         </View>
-    )
+    );
+  }
+
+  onRegister(token) {
+    Alert.alert("Registered !", JSON.stringify(token));
+    console.log(token);
+    this.setState({ registerToken: token.token, gcmRegistered: true });
+  }
+
+  onNotif(notif) {
+    console.log(notif);
+    Alert.alert(notif.title, notif.message);
+  }
+
+  handlePerm(perms) {
+    Alert.alert("Permissions", JSON.stringify(perms));
   }
 }
 
@@ -69,7 +75,28 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   },
-  picker: {
-    width: 100,
+  button: {
+    borderWidth: 1,
+    borderColor: "#000000",
+    margin: 5,
+    padding: 5,
+    width: "70%",
+    backgroundColor: "#DDDDDD",
+    borderRadius: 5,
+  },
+  textField: {
+    borderWidth: 1,
+    borderColor: "#AAAAAA",
+    margin: 5,
+    padding: 5,
+    width: "70%"
+  },
+  spacer: {
+    height: 10,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 20,
+    textAlign: "center",
   }
 });
