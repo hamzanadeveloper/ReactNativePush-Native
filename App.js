@@ -12,6 +12,8 @@ import PushController from './PushController.js';
 import appConfig from './app.json';
 
 type Props = {};
+const API_URL = "https://fcm.googleapis.com/fcm/send";
+
 export default class App extends Component<Props> {
 
   constructor(props) {
@@ -36,6 +38,7 @@ export default class App extends Component<Props> {
           <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelNotif() }}><Text>Cancel last notification (if any)</Text></TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelAll() }}><Text>Cancel all notifications</Text></TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => { this.notif.checkPermission(this.handlePerm.bind(this)) }}><Text>Check Permission</Text></TouchableOpacity>
+          <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
 
           <View style={styles.spacer}></View>
           <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="GCM ID" />
@@ -57,6 +60,33 @@ export default class App extends Component<Props> {
     console.log(notif);
     Alert.alert(notif.title, notif.message);
   }
+
+    sendRemote(){
+        let body = {
+            "to": "e-GW1ccwDmM:APA91bG13B3tGPGzObHUrwdmc671NCVhAjBarlVvE2jrjcSThxBfKF3pq1Hn36iidGXAehUXDisbSNLcFCuwNVBGBFl5qFhYqM0AxPfl5oko3jJAqEW4sRg8AJXcLD1Kpb61xcXh2phG",
+            "notification":{
+                "title": "Simple FCM Client",
+                "body": "This is a notification with only NOTIFICATION.",
+                "sound": "default",
+                "click_action": "fcm.ACTION.HELLO"
+            },
+            "priority": 10
+        }
+
+        this._send(JSON.stringify(body), "notification");
+    }
+
+    _send(body, type) {
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "Content-Length": parseInt(body.length),
+            "Authorization": "key=AAAAnBLPaBI:APA91bFW9LU8lZ24h8g4aJ-UaYJkl8ce-eDnv7rPuc6jiisoUvacFQkdHGtmF8NUL2s6acK36QlRKb7PtTIGWJOWboFTf81243KpmpItPbq179NtPbOwfNYPNXk2wCsc5WAzkmZnOVqH"
+        });
+
+        fetch(API_URL, { method: "POST", headers, body })
+            .then(response => console.log("Send " + type + " response", response))
+            .catch(error => console.log("Error sending " + type, error));
+    }
 
   handlePerm(perms) {
     Alert.alert("Permissions", JSON.stringify(perms));
