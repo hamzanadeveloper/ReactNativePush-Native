@@ -34,15 +34,12 @@ export default class App extends Component<Props> {
   render() {
     return (
         <View style={styles.container}>
-          <Text style={styles.title}>Example app react-native-push-notification</Text>
+          <Text style={styles.title}>React Native Push Notification</Text>
           <View style={styles.spacer}></View>
           <TextInput style={styles.textField} value={this.state.registerToken} placeholder="Register token" />
           <View style={styles.spacer}></View>
 
           <TouchableOpacity style={styles.button} onPress={() => { this.notif.localNotif() }}><Text>Local Notification (now)</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => { this.notif.scheduleNotif() }}><Text>Schedule Notification in 30s</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelNotif() }}><Text>Cancel last notification (if any)</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.button} onPress={() => { this.notif.cancelAll() }}><Text>Cancel all notifications</Text></TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => { this.notif.checkPermission(this.handlePerm.bind(this)) }}><Text>Check Permission</Text></TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
 
@@ -67,12 +64,13 @@ export default class App extends Component<Props> {
     Alert.alert(notif.title, notif.message);
   }
 
-    sendRemote(){
+  sendRemote(){
+    if(this.state.registerToken){
         let body = {
-            "to": "e-GW1ccwDmM:APA91bG13B3tGPGzObHUrwdmc671NCVhAjBarlVvE2jrjcSThxBfKF3pq1Hn36iidGXAehUXDisbSNLcFCuwNVBGBFl5qFhYqM0AxPfl5oko3jJAqEW4sRg8AJXcLD1Kpb61xcXh2phG",
+            "to": this.state.registerToken,
             "notification":{
-                "title": "Simple FCM Client",
-                "body": "This is a notification with only NOTIFICATION.",
+                "title": "Client",
+                "body": "This is a notification!.",
                 "sound": "default",
                 "click_action": "fcm.ACTION.HELLO"
             },
@@ -81,18 +79,23 @@ export default class App extends Component<Props> {
 
         this._send(JSON.stringify(body), "notification");
     }
-
-    _send(body, type) {
-        let headers = new Headers({
-            "Content-Type": "application/json",
-            "Content-Length": parseInt(body.length),
-            "Authorization": "key=AAAAnBLPaBI:APA91bFW9LU8lZ24h8g4aJ-UaYJkl8ce-eDnv7rPuc6jiisoUvacFQkdHGtmF8NUL2s6acK36QlRKb7PtTIGWJOWboFTf81243KpmpItPbq179NtPbOwfNYPNXk2wCsc5WAzkmZnOVqH"
-        });
-
-        fetch(API_URL, { method: "POST", headers, body })
-            .then(response => console.log("Send " + type + " response", response))
-            .catch(error => console.log("Error sending " + type, error));
+    else{
+        Alert.alert("Configure Sender ID First.")
+        return null
     }
+  }
+
+  _send(body, type) {
+      let headers = new Headers({
+          "Content-Type": "application/json",
+          "Content-Length": parseInt(body.length),
+          "Authorization": "key=AAAAnBLPaBI:APA91bFW9LU8lZ24h8g4aJ-UaYJkl8ce-eDnv7rPuc6jiisoUvacFQkdHGtmF8NUL2s6acK36QlRKb7PtTIGWJOWboFTf81243KpmpItPbq179NtPbOwfNYPNXk2wCsc5WAzkmZnOVqH"
+      });
+
+      fetch(API_URL, { method: "POST", headers, body })
+          .then(response => console.log("Send " + type + " response", response))
+          .catch(error => console.log("Error sending " + type, error));
+  }
 
   handlePerm(perms) {
     Alert.alert("Permissions", JSON.stringify(perms));

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>670330480658-bvqvak7hjq14g3umc17o5fj3r0i0pch0.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.670330480658-bvqvak7hjq14g3umc17o5fj3r0i0pch0</string>
+	<key>API_KEY</key>
+	<string>AIzaSyClhv8OjCm9jWqUTQnDayryJMAgn-4FaOY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>670330480658</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.reactnativepushdemo.</string>
+	<key>PROJECT_ID</key>
+	<string>pushdemo-55f23</string>
+	<key>STORAGE_BUCKET</key>
+	<string>pushdemo-55f23.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:670330480658:ios:d20fdfb2d16351075f10cb</string>
+	<key>DATABASE_URL</key>
+	<string>https://pushdemo-55f23.firebaseio.com</string>
+</dict>
+</plist>
