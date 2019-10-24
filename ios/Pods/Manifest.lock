@@ -328,16 +328,16 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
-  EXAppLoaderProvider: 5d348813a9cf09b03bbe5b8b55437bc1bfbddbd1
-  EXConstants: 31e5318521be6175009af6ccd3e97dedf39da96a
-  EXFileSystem: 7e53a2c30a2eb6987ba6d5158ab908f947523228
-  EXFont: 71d07dc5d2153db7d1a23f1e0cc1b6341d55c432
-  EXKeepAwake: d4caf9a1a7691126ade4ca0b76592e93250a8f29
-  EXLinearGradient: b7d4a703ac9802078a8a8e212d205929c18b03e4
-  EXLocation: 452a1d9edceb1b93deb86fd785236606d33742dd
-  EXPermissions: df10ad83df2f6b647aec304619354f8ab48d5f63
-  EXSQLite: ddc1e6727bd7d36e649f07590fe3ae5511c1f039
-  EXWebBrowser: 18924c3d2a3a1aa95d413672f058beff589c80f4
+  EXAppLoaderProvider: 98f3e889fa48b441b19c64f19193c82ebb1c15ca
+  EXConstants: 11210104ab59ee1cdfb79b0466add077f59c9218
+  EXFileSystem: 217d1480b63c595d0620e64d6a6845dc52229bbd
+  EXFont: ce93c38bb43624eac43d283ca42e6e09496342b6
+  EXKeepAwake: 97c48386fa562a57956c99a1b66b422de1fa3a19
+  EXLinearGradient: ac8c71b16c1996624f1c41475bb987221574f830
+  EXLocation: 89ec75877fcf40b3dfeca428c898d25fce299fb3
+  EXPermissions: b4e5d6e134317bfb29bed37998b7c0deab318e6d
+  EXSQLite: 62f542b96081e28e239317a6dbd759aa6e7200f7
+  EXWebBrowser: 52ce377fa8fc0f4832e233d625d5a5ebb2801b64
   Firebase: bc9cfc7a96c73268656d5aaab453ff1b4b530e0e
   FirebaseAnalytics: 0e3ecff2c5d86070f7d4325e21f1edabfbd558dc
   FirebaseCore: beeff42c07c30ea94702471d99db2089b594fbbd
@@ -352,24 +352,24 @@ SPEC CHECKSUMS:
   GoogleUtilities: f895fde57977df4e0233edda0dbeac490e3703b6
   nanopb: 06f6030d554e6473f5e172460173fcf80f5548f4
   React: 36d0768f9e93be2473b37e7fa64f92c1d5341eef
-  RNCPushNotificationIOS: 0b8d06ff190d84627dd17501bfb96652375970e4
+  RNCPushNotificationIOS: 7bcc4071d6f25c4d441cbef42a097462f4e30208
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
-  UMBarCodeScannerInterface: d5a6fdc98ed6241225b0a8432a7f4e2b397668bc
-  UMCameraInterface: 68870a3197fee85bd5afca5609ba4a5b7257d19d
-  UMConstantsInterface: d25b8e8887ca7aaf568c06caf08f4d40734ee4ef
-  UMCore: 402cee150324974974f5c32b5404d8af65e4cff5
-  UMFaceDetectorInterface: 7b4f1a92f0c726b58b086296048efe193b570678
-  UMFileSystemInterface: aadb9a67aa6470d7ebc06cf04dc54fee6781ac48
-  UMFontInterface: 2d3c128285086bbed3d2a650f1d698323ef3b25a
-  UMImageLoaderInterface: 2829a7571a12d2e754c73c55ffe7e327d8402c7d
-  UMPermissionsInterface: b6a6e96db0f4011a25aaca14e6022529dd3d6e4e
-  UMReactNativeAdapter: 93c2f520a1cdb6ef3058a7b6a95275a804e0923b
-  UMSensorsInterface: cf59dd7602764a2419e00167429be3e4be39c61d
-  UMTaskManagerInterface: 1e70fe58b872355f0ecb44fb81bb1a16484047f0
+  UMBarCodeScannerInterface: 07047b4faa779e7963efa3d2c5951a71a0a807bf
+  UMCameraInterface: f6a3e71ddd928617637084bfd67db2daec3b1927
+  UMConstantsInterface: 20e6caaba4ddac70d0b50827d6cf35a202ac988f
+  UMCore: 01d7ed248e2d4789105292a71ce1385ff4315c53
+  UMFaceDetectorInterface: 623ca9703dc664d13edf315ec930df9d2246b7d0
+  UMFileSystemInterface: c7dc550ff72d2b38258f218b086b32b3de536957
+  UMFontInterface: a1ec983801daad298617d00dabbfdb609325665c
+  UMImageLoaderInterface: f7b69ad8dfcae00c87d70a2081af78293e445fee
+  UMPermissionsInterface: 0d060960ebb35d905d74a52461a3e6ab2d43b53b
+  UMReactNativeAdapter: 619f5e9769977caf4a862e8e232ce1ef5c74ac01
+  UMSensorsInterface: 1d276f7fdf781a09715091bad7873c27da271e9b
+  UMTaskManagerInterface: 8f2117979aacb688fe304f834ff8800fadc320bb
   yoga: 684513b14b03201579ba3cee20218c9d1298b0cc
 
-PODFILE CHECKSUM: 5322d2a328991cc131927542b4e0dec4fb5c0abd
+PODFILE CHECKSUM: 7b495e06d2c8af6466e90767192c26049b37f5e1
 
 COCOAPODS: 1.8.4

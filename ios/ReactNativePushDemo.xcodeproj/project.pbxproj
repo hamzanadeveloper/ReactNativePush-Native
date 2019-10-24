@@ -12,13 +12,12 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		A224FBE67BEE919153058AE6 /* libPods-ReactNativePushDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 321C9ED3FD5E4C129C680A66 /* libPods-ReactNativePushDemo.a */; };
-		BBB8E05A235F7E280015C40C /* libRNCPushNotificationIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BBB8E059235F7DA50015C40C /* libRNCPushNotificationIOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BBB8E058235F7DA50015C40C /* PBXContainerItemProxy */ = {
+		BBB8E083236208A10015C40C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = BBB8E054235F7DA50015C40C /* PushNotificationIOS.xcodeproj */;
+			containerPortal = BBB8E07F236208A10015C40C /* PushNotificationIOS.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 9B97F66B220DEC6000B61540;
 			remoteInfo = RNCPushNotificationIOS;
@@ -38,7 +37,7 @@
 		321C9ED3FD5E4C129C680A66 /* libPods-ReactNativePushDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativePushDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6906BC428A396E65FE955B91 /* Pods-ReactNativePushDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativePushDemo.debug.xcconfig"; path = "Target Support Files/Pods-ReactNativePushDemo/Pods-ReactNativePushDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		B06F757073A5F95FD0DFD7B8 /* Pods-ReactNativePushDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativePushDemo.release.xcconfig"; path = "Target Support Files/Pods-ReactNativePushDemo/Pods-ReactNativePushDemo.release.xcconfig"; sourceTree = "<group>"; };
-		BBB8E054235F7DA50015C40C /* PushNotificationIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PushNotificationIOS.xcodeproj; path = "../node_modules/@react-native-community/push-notification-ios/ios/PushNotificationIOS.xcodeproj"; sourceTree = "<group>"; };
+		BBB8E07F236208A10015C40C /* PushNotificationIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = PushNotificationIOS.xcodeproj; path = "../node_modules/@react-native-community/push-notification-ios/ios/PushNotificationIOS.xcodeproj"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -48,7 +47,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBB8E05A235F7E280015C40C /* libRNCPushNotificationIOS.a in Frameworks */,
 				A224FBE67BEE919153058AE6 /* libPods-ReactNativePushDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -87,14 +85,13 @@
 				6906BC428A396E65FE955B91 /* Pods-ReactNativePushDemo.debug.xcconfig */,
 				B06F757073A5F95FD0DFD7B8 /* Pods-ReactNativePushDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				BBB8E054235F7DA50015C40C /* PushNotificationIOS.xcodeproj */,
+				BBB8E07F236208A10015C40C /* PushNotificationIOS.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -121,10 +118,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BBB8E055235F7DA50015C40C /* Products */ = {
+		BBB8E080236208A10015C40C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				BBB8E059235F7DA50015C40C /* libRNCPushNotificationIOS.a */,
+				BBB8E084236208A10015C40C /* libRNCPushNotificationIOS.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -160,6 +157,11 @@
 			attributes = {
 				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = Facebook;
+				TargetAttributes = {
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = CPRY55QYC6;
+					};
+				};
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "ReactNativePushDemo" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -175,8 +177,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = BBB8E055235F7DA50015C40C /* Products */;
-					ProjectRef = BBB8E054235F7DA50015C40C /* PushNotificationIOS.xcodeproj */;
+					ProductGroup = BBB8E080236208A10015C40C /* Products */;
+					ProjectRef = BBB8E07F236208A10015C40C /* PushNotificationIOS.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -187,11 +189,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		BBB8E059235F7DA50015C40C /* libRNCPushNotificationIOS.a */ = {
+		BBB8E084236208A10015C40C /* libRNCPushNotificationIOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNCPushNotificationIOS.a;
-			remoteRef = BBB8E058235F7DA50015C40C /* PBXContainerItemProxy */;
+			remoteRef = BBB8E083236208A10015C40C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -221,7 +223,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		9E5A323DB7831509CC3B2661 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -298,6 +300,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = CPRY55QYC6;
 				INFOPLIST_FILE = ReactNativePushDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -307,6 +310,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativePushDemo;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -317,6 +321,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = CPRY55QYC6;
 				INFOPLIST_FILE = ReactNativePushDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -326,6 +331,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ReactNativePushDemo;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

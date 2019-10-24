@@ -10,6 +10,7 @@ import React, { Component } from 'react';
 import { TextInput, StyleSheet, Text, View, TouchableOpacity, Alert } from 'react-native';
 import PushController from './PushController.js';
 import appConfig from './app.json';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import {YellowBox} from 'react-native';
 
 
