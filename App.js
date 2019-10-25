@@ -10,15 +10,13 @@
 import React, {Component} from 'react';
 import { Platform, Alert, StyleSheet, Text, TouchableHighlight, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import PushNotification from 'react-native-push-notification';
 import firebase from 'react-native-firebase';
 import appConfig from './app.json';
 import PushController from './PushController.js'
-import FlashMessage, { showMessage } from "react-native-flash-message";
 
 
-YellowBox.ignoreWarnings([
-    'Require cycle:',
-]);
+YellowBox.ignoreWarnings(['Require cycle:', 'Remote debugger']);
 
 const API_URL = "https://fcm.googleapis.com/fcm/send";
 
@@ -49,17 +47,11 @@ export default class App extends Component<Props> {
     }
 
     _onRemoteNotification(notification) {
-        if(Platform.OS){ // Add to only iOS
-            showMessage({
-                message: notification._data.title,
-                icon: 'info',
-                duration: 3000,
-                description: notification._data.body,
-                backgroundColor: 'rgb(100,100,100)',
-                color: 'white',
-                type: "info",
-            });
-        }
+        PushNotification.localNotification({
+            alertAction: "view",
+            title: notification._data.title, // (optional)
+            message: notification._data.body, // (required)
+        });
     }
 
     onRegister(token) {
@@ -123,10 +115,8 @@ export default class App extends Component<Props> {
                 <View style={styles.spacer}></View>
                 <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="GCM ID" />
                 <TouchableOpacity style={styles.button} onPress={() => { this.notif.configure(this.onRegister.bind(this), this.onNotif.bind(this), this.state.senderId) }}><Text>Configure Sender ID</Text></TouchableOpacity>
-                {this.state.gcmRegistered && <Text>GCM Configured !</Text>}
 
                 <View style={styles.spacer}></View>
-                <FlashMessage position="top" />
             </View>
         );
     }
