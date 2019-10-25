@@ -8,29 +8,15 @@
  */
 
 import React, {Component} from 'react';
-import {
-    Alert,
-    StyleSheet,
-    Text,
-    TouchableHighlight,
-    View,
-} from 'react-native';
+import {Alert, StyleSheet, Text, TouchableHighlight, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
-import { AsyncStorage } from 'react-native';
 import firebase from 'react-native-firebase';
 
-class Button extends React.Component<$FlowFixMeProps> {
-    render() {
-        return (
-            <TouchableHighlight
-                underlayColor={'white'}
-                style={styles.button}
-                onPress={this.props.onPress}>
-                <Text style={styles.buttonLabel}>{this.props.label}</Text>
-            </TouchableHighlight>
-        );
-    }
-}
+YellowBox.ignoreWarnings([
+    'Require cycle:',
+]);
+
+const API_URL = "https://fcm.googleapis.com/fcm/send";
 
 type Props = {};
 type State = {
@@ -39,9 +25,13 @@ type State = {
 export default class App extends Component<Props, State> {
     state = {
         permissions: {},
+        fcmToken: "",
     };
 
-    UNSAFE_componentWillMount() {
+    async UNSAFE_componentWillMount() {
+        const fcmToken = await firebase.messaging().getToken();
+        this.setState({ fcmToken })
+
         PushNotificationIOS.addEventListener('register', this._onRegistered);
         PushNotificationIOS.addEventListener(
             'registrationError',
@@ -78,34 +68,50 @@ export default class App extends Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
-                <Button
-                    onPress={this._sendNotification}
-                    label="Send fake notification"
-                />
+                <Text style={styles.title}>React Native Push Notifications</Text>
+                <View style={styles.spacer}></View>
+                <TextInput style={styles.textField} value={this.state.fcmToken} placeholder="FCM token" />
+                <View style={styles.spacer}></View>
 
-                <Button
-                    onPress={this._sendLocalNotification}
-                    label="Send fake local notification"
-                />
-                <Button
-                    onPress={() =>
-                        PushNotificationIOS.setApplicationIconBadgeNumber(42)
-                    }
-                    label="Set app's icon badge to 42"
-                />
-                <Button
-                    onPress={() => PushNotificationIOS.setApplicationIconBadgeNumber(0)}
-                    label="Clear app's icon badge"
-                />
-                <View>
-                    <Button
-                        onPress={this._showPermissions.bind(this)}
-                        label="Show enabled permissions"
-                    />
-                    <Text>{JSON.stringify(this.state.permissions)}</Text>
-                </View>
+                <TouchableOpacity style={styles.button} onPress={() => { console.log(this.state.fcmToken) }}><Text>Set the FCM Token</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
+
+                <View style={styles.spacer}></View>
+                <View style={styles.spacer}></View>
             </View>
         );
+    }
+
+    sendRemote(){
+        let body = {
+            "to": this.state.fcmToken,
+            "notification":{
+                "title": "Simple FCM Client",
+                "body": "This is a notification with only NOTIFICATION.",
+                "sound": "default",
+                "click_action": "fcm.ACTION.HELLO"
+            },
+            "data" : {
+                "body" : "Simple FCM Client",
+                "title" : "This is a push notification!",
+                "content_available" : true,
+                "priority" : "high",
+            }
+        }
+
+        this._send(JSON.stringify(body), "notification");
+    }
+
+    _send(body, type) {
+        let headers = new Headers({
+            "Content-Type": "application/json",
+            "Content-Length": parseInt(body.length),
+            "Authorization": "key=AAAAnBLPaBI:APA91bFW9LU8lZ24h8g4aJ-UaYJkl8ce-eDnv7rPuc6jiisoUvacFQkdHGtmF8NUL2s6acK36QlRKb7PtTIGWJOWboFTf81243KpmpItPbq179NtPbOwfNYPNXk2wCsc5WAzkmZnOVqH"
+        });
+
+        fetch(API_URL, { method: "POST", headers, body })
+            .then(response => console.log("Send " + type + " response", response))
+            .catch(error => console.log("Error sending " + type, error));
     }
 
     _sendNotification() {
@@ -129,20 +135,7 @@ export default class App extends Component<Props, State> {
     }
 
     async _onRegistered(deviceToken) {
-        const fcmToken = await firebase.messaging().getToken();
-
-        console.log("THE DEVICE TOKEN IS: ", deviceToken)
-        console.log("THE FCM TOKEN IS: ", fcmToken)
-        Alert.alert(
-            'Registered For Remote Push',
-            `Device Token: ${deviceToken}`,
-            [
-                {
-                    text: 'Dismiss',
-                    onPress: null,
-                },
-            ],
-        );
+        console.log(`The device token is ${deviceToken}`)
     }
 
     _onRegistrationError(error) {
@@ -201,12 +194,33 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
     },
+    welcome: {
+        fontSize: 20,
+        textAlign: 'center',
+        margin: 10,
+    },
     button: {
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: "#000000",
+        margin: 5,
+        padding: 5,
+        width: "70%",
+        backgroundColor: "#DDDDDD",
+        borderRadius: 5,
     },
-    buttonLabel: {
-        color: 'blue',
+    textField: {
+        borderWidth: 1,
+        borderColor: "#AAAAAA",
+        margin: 5,
+        padding: 5,
+        width: "70%"
     },
+    spacer: {
+        height: 10,
+    },
+    title: {
+        fontWeight: "bold",
+        fontSize: 20,
+        textAlign: "center",
+    }
 });
