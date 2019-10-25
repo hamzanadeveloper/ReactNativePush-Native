@@ -16,6 +16,8 @@ import {
     View,
 } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import { AsyncStorage } from 'react-native';
+import firebase from 'react-native-firebase';
 
 class Button extends React.Component<$FlowFixMeProps> {
     render() {
@@ -126,8 +128,11 @@ export default class App extends Component<Props, State> {
         });
     }
 
-    _onRegistered(deviceToken) {
+    async _onRegistered(deviceToken) {
+        const fcmToken = await firebase.messaging().getToken();
+
         console.log("THE DEVICE TOKEN IS: ", deviceToken)
+        console.log("THE FCM TOKEN IS: ", fcmToken)
         Alert.alert(
             'Registered For Remote Push',
             `Device Token: ${deviceToken}`,

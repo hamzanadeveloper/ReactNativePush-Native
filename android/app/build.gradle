@@ -139,6 +139,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-firebase')
     compile project(':react-native-push-notification')
     implementation project(':react-native-push-notification')
     implementation project(':react-native-screens')
