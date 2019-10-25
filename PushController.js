@@ -14,14 +14,9 @@ export default class PushController {
             // (optional) Called when Token is generated (iOS and Android)
             onRegister: onRegister, //this._onRegister.bind(this),
 
-            // (required) Called when a remote or local notification is opened or received
             onNotification: function(onNotification) {
-                console.log("NOTIFICATION:", onNotification);
 
-                // process the notification
-
-                // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-                onNotification.finish(PushNotificationIOS.FetchResult.NoData);
+                onNotification.finish("backgroundFetchResultNewData");
             },
             // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
             senderID: gcm,

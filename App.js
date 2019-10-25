@@ -8,9 +8,13 @@
  */
 
 import React, {Component} from 'react';
-import {Alert, StyleSheet, Text, TouchableHighlight, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
+import { Platform, Alert, StyleSheet, Text, TouchableHighlight, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import firebase from 'react-native-firebase';
+import appConfig from './app.json';
+import PushController from './PushController.js'
+import FlashMessage, { showMessage } from "react-native-flash-message";
+
 
 YellowBox.ignoreWarnings([
     'Require cycle:',
@@ -22,78 +26,65 @@ type Props = {};
 type State = {
     permissions: Object,
 };
-export default class App extends Component<Props, State> {
-    state = {
-        permissions: {},
-        fcmToken: "",
-    };
+export default class App extends Component<Props> {
 
-    async UNSAFE_componentWillMount() {
+    constructor(props) {
+        super(props);
+        this.state = {
+            senderId: appConfig.senderID,
+            fcmToken: "",
+        };
+
+        this.notif = new PushController(this.onRegister.bind(this), this.onNotification.bind(this));
+    }
+
+    async componentWillMount() {
         const fcmToken = await firebase.messaging().getToken();
         this.setState({ fcmToken })
 
-        PushNotificationIOS.addEventListener('register', this._onRegistered);
-        PushNotificationIOS.addEventListener(
-            'registrationError',
-            this._onRegistrationError,
-        );
         PushNotificationIOS.addEventListener(
             'notification',
             this._onRemoteNotification,
         );
-        PushNotificationIOS.addEventListener(
-            'localNotification',
-            this._onLocalNotification,
-        );
-
-        PushNotificationIOS.requestPermissions();
     }
 
-    componentWillUnmount() {
-        PushNotificationIOS.removeEventListener('register', this._onRegistered);
-        PushNotificationIOS.removeEventListener(
-            'registrationError',
-            this._onRegistrationError,
-        );
-        PushNotificationIOS.removeEventListener(
-            'notification',
-            this._onRemoteNotification,
-        );
-        PushNotificationIOS.removeEventListener(
-            'localNotification',
-            this._onLocalNotification,
-        );
+    _onRemoteNotification(notification) {
+        if(Platform.OS){ // Add to only iOS
+            showMessage({
+                message: notification._data.title,
+                icon: 'info',
+                duration: 3000,
+                description: notification._data.body,
+                backgroundColor: 'rgb(100,100,100)',
+                color: 'white',
+                type: "info",
+            });
+        }
     }
 
-    render() {
-        return (
-            <View style={styles.container}>
-                <Text style={styles.title}>React Native Push Notifications</Text>
-                <View style={styles.spacer}></View>
-                <TextInput style={styles.textField} value={this.state.fcmToken} placeholder="FCM token" />
-                <View style={styles.spacer}></View>
+    onRegister(token) {
+        Alert.alert("Registered !", JSON.stringify(token));
+        console.log(token);
+        this.setState({ registerToken: token.token, gcmRegistered: true });
+    }
 
-                <TouchableOpacity style={styles.button} onPress={() => { console.log(this.state.fcmToken) }}><Text>Set the FCM Token</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
-
-                <View style={styles.spacer}></View>
-                <View style={styles.spacer}></View>
-            </View>
-        );
+    onNotification(notif) {
+        console.log(notif);
+        Alert.alert(notif.title, notif.message);
     }
 
     sendRemote(){
         let body = {
-            "to": this.state.fcmToken,
-            "notification":{
-                "title": "Simple FCM Client",
-                "body": "This is a notification with only NOTIFICATION.",
-                "sound": "default",
-                "click_action": "fcm.ACTION.HELLO"
+            "to" : this.state.fcmToken,
+            "notification" : {
+                "body" : "Say something!",
+                "title" : "Welcome to Push Notifications!",
+                "content_available" : true,
+                "priority" : "high",
             },
             "data" : {
-                "body" : "Simple FCM Client",
-                "title" : "This is a push notification!",
+                "body" : "Say something!",
+                "title" : "Welcome to Push Notifications!",
                 "content_available" : true,
                 "priority" : "high",
             }
@@ -114,78 +105,32 @@ export default class App extends Component<Props, State> {
             .catch(error => console.log("Error sending " + type, error));
     }
 
-    _sendNotification() {
-        require('RCTDeviceEventEmitter').emit('remoteNotificationReceived', {
-            remote: true,
-            aps: {
-                alert: 'Sample notification',
-                badge: '+1',
-                sound: 'default',
-                category: 'REACT_NATIVE',
-                'content-available': 1,
-            },
-        });
+    handlePerm(perms) {
+        Alert.alert("Permissions", JSON.stringify(perms));
     }
 
-    _sendLocalNotification() {
-        PushNotificationIOS.presentLocalNotification({
-            alertBody: 'Sample local notification',
-            applicationIconBadgeNumber: 1
-        });
-    }
+    render() {
+        return (
+            <View style={styles.container}>
+                <Text style={styles.title}>React Native Push Notification</Text>
+                <View style={styles.spacer}></View>
+                <TextInput style={styles.textField} value={this.state.fcmToken} placeholder="FCM Token" />
+                <View style={styles.spacer}></View>
 
-    async _onRegistered(deviceToken) {
-        console.log(`The device token is ${deviceToken}`)
-    }
+                <TouchableOpacity style={styles.button} onPress={() => { this.notif.localNotif() }}><Text>Local Notification (now)</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
 
-    _onRegistrationError(error) {
-        Alert.alert(
-            'Failed To Register For Remote Push',
-            `Error (${error.code}): ${error.message}`,
-            [
-                {
-                    text: 'Dismiss',
-                    onPress: null,
-                },
-            ],
+                <View style={styles.spacer}></View>
+                <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="GCM ID" />
+                <TouchableOpacity style={styles.button} onPress={() => { this.notif.configure(this.onRegister.bind(this), this.onNotif.bind(this), this.state.senderId) }}><Text>Configure Sender ID</Text></TouchableOpacity>
+                {this.state.gcmRegistered && <Text>GCM Configured !</Text>}
+
+                <View style={styles.spacer}></View>
+                <FlashMessage position="top" />
+            </View>
         );
-    }
-
-    _onRemoteNotification(notification) {
-        const result = `Message: ${notification.getMessage()};\n
-      badge: ${notification.getBadgeCount()};\n
-      sound: ${notification.getSound()};\n
-      category: ${notification.getCategory()};\n
-      content-available: ${notification.getContentAvailable()}.`;
-
-        Alert.alert('Push Notification Received', result, [
-            {
-                text: 'Dismiss',
-                onPress: null,
-            },
-        ]);
-    }
-
-    _onLocalNotification(notification) {
-        Alert.alert(
-            'Local Notification Received',
-            'Alert message: ' + notification.getMessage(),
-            [
-                {
-                    text: 'Dismiss',
-                    onPress: null,
-                },
-            ],
-        );
-    }
-
-    _showPermissions() {
-        PushNotificationIOS.checkPermissions(permissions => {
-            this.setState({permissions});
-        });
     }
 }
-
 
 const styles = StyleSheet.create({
     container: {
