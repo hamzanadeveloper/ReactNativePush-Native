@@ -12,6 +12,7 @@
     "@react-native-community/push-notification-ios": "^1.0.2",
     "expo": "^35.0.0",
     "expo-permissions": "^7.0.0",
+    "firebase": "^7.2.2",
     "react": "16.8.3",
     "react-dom": "16.8.3",
     "react-native": "0.59.10",

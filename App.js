@@ -1,14 +1,5 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- * @lint-ignore-every XPLATJSCOPYRIGHT1
- */
-
 import React, {Component} from 'react';
-import { Platform, Alert, StyleSheet, Text, TouchableHighlight, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
+import { Platform, Alert, StyleSheet, Text, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 import firebase from 'react-native-firebase';
@@ -47,11 +38,13 @@ export default class App extends Component<Props> {
     }
 
     _onRemoteNotification(notification) {
-        PushNotification.localNotification({
-            alertAction: "view",
-            title: notification._data.title, // (optional)
-            message: notification._data.body, // (required)
-        });
+        if(Platform.OS === 'ios'){ // iOS won't display notifications if app is in the foreground.
+            PushNotification.localNotification({
+                alertAction: "view",
+                title: notification._data.title, // (optional)
+                message: notification._data.body, // (required)
+            });
+        }
     }
 
     onRegister(token) {
@@ -96,11 +89,7 @@ export default class App extends Component<Props> {
             .then(response => console.log("Send " + type + " response", response))
             .catch(error => console.log("Error sending " + type, error));
     }
-
-    handlePerm(perms) {
-        Alert.alert("Permissions", JSON.stringify(perms));
-    }
-
+    
     render() {
         return (
             <View style={styles.container}>
@@ -113,8 +102,7 @@ export default class App extends Component<Props> {
                 <TouchableOpacity style={styles.button} onPress={() => { this.sendRemote() }}><Text>Remote Notification</Text></TouchableOpacity>
 
                 <View style={styles.spacer}></View>
-                <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="GCM ID" />
-                <TouchableOpacity style={styles.button} onPress={() => { this.notif.configure(this.onRegister.bind(this), this.onNotif.bind(this), this.state.senderId) }}><Text>Configure Sender ID</Text></TouchableOpacity>
+                <TextInput style={styles.textField} value={this.state.senderId} onChangeText={(e) => {this.setState({ senderId: e })}} placeholder="Firebase Sender ID" />
 
                 <View style={styles.spacer}></View>
             </View>
