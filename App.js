@@ -79,7 +79,7 @@ export default class App extends Component<Props> {
         let headers = new Headers({
             "Content-Type": "application/json",
             "Content-Length": parseInt(body.length),
-            "Authorization": "key=AAAAnBLPaBI:APA91bFW9LU8lZ24h8g4aJ-UaYJkl8ce-eDnv7rPuc6jiisoUvacFQkdHGtmF8NUL2s6acK36QlRKb7PtTIGWJOWboFTf81243KpmpItPbq179NtPbOwfNYPNXk2wCsc5WAzkmZnOVqH"
+            "Authorization": "key=<your-server-key>" // Put your server key here from the Firebase console.
         });
 
         fetch(API_URL, { method: "POST", headers, body })

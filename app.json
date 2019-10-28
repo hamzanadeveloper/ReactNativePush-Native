@@ -1,7 +1,7 @@
 {
   "name": "ReactNativePushDemo",
   "displayName": "React Native Push Demo",
-  "senderID": "670330480658",
+  "senderID": "<your-firebase-senderID>",
   "expo": {
     "name": "React Native Push Demo",
     "icon": "./assets/img/react-native-icon.png",
