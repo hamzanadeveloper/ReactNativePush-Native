@@ -48,8 +48,7 @@ Navigate to the [Firebase Console](https://console.firebase.google.com/) and sel
 # Troubleshooting
 Most issues can be resolved by **uninstalling the app from the device** and cleaning up by:
 - If Android 
-  - In your command-line, open the *android* directory
-  - Run `./gradlew clean`
+  - In your command-line, open the *android* directory, and run `./gradlew clean`
 - If iOS
   - Delete the *build* folder from the *ios* directory
 Following this, re-run the application.
