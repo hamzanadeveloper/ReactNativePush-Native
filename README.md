@@ -1,4 +1,5 @@
 # React Native Push Notifications 
+Push notifications are simple banner-like notifications that appear on your phone when your application sends a user a notification. Push notifications are an excellent way to re-engage users by notifying them of new updates and drawing them back into your application. This repository will allow you to create and test out push notifications using a Firebase server. Using React-Native, it will allow you to create a cross-compatible mobile application, both functional on iOS and Android operating systems. 
 
 This repository uses dependencies:
 - `react-native-push-notification`
@@ -14,7 +15,7 @@ Begin by cloning the repository:
 git clone https://github.com/hamzanadeveloper/ReactNativePush-Native.git
 ```
 Requirements:
-- Android/iOS device connected to machine via USB. If you'd like to use a simulator, look [here](https://facebook.github.io/react-native/docs/running-on-simulator-ios)
+- Android/iOS device connected to machine via USB. If you would like to use a simulator, look [here](https://facebook.github.io/react-native/docs/running-on-simulator-ios)
 - A project on the [Firebase Console](https://console.firebase.google.com/) (for the *server key* and the *senderID*)
 - Enrollment in the [Apple Developer Program](https://developer.apple.com/programs/) (for *authorization keys* and *certificates* - needed for iOS notifications)
   - Generate [APN certificates and keys](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/establishing_a_certificate-based_connection_to_apns)
@@ -54,7 +55,7 @@ Most issues can be resolved by **uninstalling the app from the device** and clea
 Following this, re-run the application.
   
 # Notes
-- The `react-native-firebase` dependency can entirely handle the API call, read the documentation [here](https://rnfirebase.io/docs/v5.x.x/messaging/reference/Messaging). However, if you'd like to handle errors yourself, you can manually do the POST request, as seen in the code
+- The `react-native-firebase` dependency can entirely handle the API call, read the documentation [here](https://rnfirebase.io/docs/v5.x.x/messaging/reference/Messaging). However, if you would like to handle errors yourself, you can manually do the POST request, as seen in the code
   - In this repository, Firebase is configured to send both FCM and APN notifications
 - Documentation on POST requests to the FCM API can be found [here](https://firebase.google.com/docs/cloud-messaging/send-message). Documentation on POST requests to the APN API can be found [here](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
 - iOS notifications do not display while the app is in the foreground, this is handled with event listeners from the `push-notification-ios` dependency
