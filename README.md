@@ -15,8 +15,8 @@ git clone https://github.com/hamzanadeveloper/ReactNativePush-Native.git
 ```
 Requirements:
 - Android/iOS device connected to machine via USB. If you'd like to use a simulator, look [here](https://facebook.github.io/react-native/docs/running-on-simulator-ios)
-- A project on the [Firebase Console](https://console.firebase.google.com/)(for the *server key* and the *senderID*)
-- Enrollment in the [Apple Developer Program](https://developer.apple.com/programs/)(for *authorization keys* and *certificates* - needed for iOS notifications)
+- A project on the [Firebase Console](https://console.firebase.google.com/) (for the *server key* and the *senderID*)
+- Enrollment in the [Apple Developer Program](https://developer.apple.com/programs/) (for *authorization keys* and *certificates* - needed for iOS notifications)
   - Generate [APN certificates and keys](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/establishing_a_certificate-based_connection_to_apns)
 - Ensure devices are on the same network as your machine
 - If Android, enable [USB debugging](https://developer.android.com/studio/debug/dev-options)
@@ -26,6 +26,7 @@ Requirements:
   - In the top bar, select *+ Capability* and add *Push Notifications*. Also, add *Background Modes* and enable *Remote notifications*
   
 # Firebase Setup
+Navigate to the [Firebase Console](https://console.firebase.google.com/) and select the project you made.
 - Setup an Android Project
   - Follow through each step, with the exception of step 3
 - Setup an iOS Project
