@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import { Platform, Alert, StyleSheet, Text, View, TextInput, TouchableOpacity, YellowBox } from 'react-native';
+
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import PushNotification from 'react-native-push-notification';
 import firebase from 'react-native-firebase';
+
 import appConfig from './app.json';
 import PushController from './PushController.js'
 
 
 YellowBox.ignoreWarnings(['Require cycle:', 'Remote debugger']);
-
 const API_URL = "https://fcm.googleapis.com/fcm/send";
 
 type Props = {};
@@ -31,10 +32,7 @@ export default class App extends Component<Props> {
         const fcmToken = await firebase.messaging().getToken();
         this.setState({ fcmToken })
 
-        PushNotificationIOS.addEventListener(
-            'notification',
-            this._onRemoteNotification,
-        );
+        PushNotificationIOS.addEventListener('notification', this._onRemoteNotification); // Use when app is in foreground for iOS
     }
 
     _onRemoteNotification(notification) {
@@ -55,7 +53,6 @@ export default class App extends Component<Props> {
 
     onNotification(notif) {
         console.log(notif);
-        Alert.alert(notif.title, notif.message);
     }
 
     sendRemote(){
@@ -89,7 +86,7 @@ export default class App extends Component<Props> {
             .then(response => console.log("Send " + type + " response", response))
             .catch(error => console.log("Error sending " + type, error));
     }
-    
+
     render() {
         return (
             <View style={styles.container}>

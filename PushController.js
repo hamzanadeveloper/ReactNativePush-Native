@@ -15,9 +15,9 @@ export default class PushController {
             onRegister: onRegister, //this._onRegister.bind(this),
 
             onNotification: function(onNotification) {
-
                 onNotification.finish("backgroundFetchResultNewData");
             },
+
             // ANDROID ONLY: GCM Sender ID (optional - not required for local notifications, but is need to receive remote push notifications)
             senderID: gcm,
 
@@ -70,13 +70,6 @@ export default class PushController {
             // number: '10', // (optional) Valid 32 bit integer specified as string. default: none (Cannot be zero)
             repeatType: 'day', // (optional) Repeating interval. Check 'Repeating Notifications' section for more info.
             actions: '["Yes", "No"]',  // (Android only) See the doc for notification actions to know more
-    });
+        });
     }
-
-
-
-    checkPermission(cbk) {
-        return PushNotification.checkPermissions(cbk);
-    }
-
 }
