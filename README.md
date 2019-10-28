@@ -57,7 +57,7 @@ Following this, re-run the application.
 - The `react-native-firebase` dependency can entirely handle the API call, read the documentation [here](https://rnfirebase.io/docs/v5.x.x/messaging/reference/Messaging). However, if you'd like to handle errors yourself, you can manually do the POST request, as seen in the code
   - In this repository, Firebase is configured to send both FCM and APN notifications
 - Documentation on POST requests to the FCM API can be found [here](https://firebase.google.com/docs/cloud-messaging/send-message). Documentation on POST requests to the APN API can be found [here](https://developer.apple.com/documentation/usernotifications/setting_up_a_remote_notification_server/sending_notification_requests_to_apns)
-- iOS notifications do not display while the app is in the foreground, this is handled with event listeners from `push-notification-ios` dependency
+- iOS notifications do not display while the app is in the foreground, this is handled with event listeners from the `push-notification-ios` dependency
 - Though it happens rarely, tokens can refresh. This can be handled by `onTokenRefresh` from the `react-native-firebase` dependency, more information [here](https://rnfirebase.io/docs/v5.x.x/messaging/reference/Messaging)
 
 
