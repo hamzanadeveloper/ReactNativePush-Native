@@ -1,4 +1,4 @@
-# React Native Push Notifications [Native]
+# React Native Push Notifications 
 
 This repository uses dependencies:
 - `react-native-push-notification`
