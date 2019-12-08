@@ -52,6 +52,7 @@ Most issues can be resolved by **uninstalling the app from the device** and clea
   - In your command-line, open the *android* directory, and run `./gradlew clean`
 - If iOS
   - Delete the *build* folder from the *ios* directory
+
 Following this, re-run the application.
   
 # Notes
