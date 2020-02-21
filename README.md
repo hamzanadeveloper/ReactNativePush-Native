@@ -1,7 +1,7 @@
 # Engage Project
 Push notifications are simple banner-like notifications that appear on your device when your application sends a user a notification. Push notifications are an excellent way to re-engage users by notifying them of new updates and drawing them back into your application. This repository will allow you to create and test out push notifications using a Firebase server. Using React-Native, it will allow you to create a cross-compatible mobile application, both functional on iOS and Android operating systems. 
 
-This repository uses dependencies:
+This repository uses:
 - `react-native-push-notification`
 - `@react-native-community/push-notification-ios`
 - `react-native-firebase`
